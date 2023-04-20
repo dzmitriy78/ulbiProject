@@ -20,8 +20,10 @@ export const Sidebar = ({className}: SidebarProps) => {
     }
 
     return (
-        <div className={classNames(cls.Sidebar, {[cls.collapsed]: collapsed}, [className])}>
-            <Button className={cls.sidebarBtn} theme={ThemeButton.CLEAR} onClick={onToggle}>
+        <div data-testid={"sidebar"}
+            className={classNames(cls.Sidebar, {[cls.collapsed]: collapsed}, [className])}>
+            <Button data-testid={"sidebar-toggle"}
+                    className={cls.sidebarBtn} theme={ThemeButton.CLEAR} onClick={onToggle}>
                 {
                     collapsed
                         ? t("Показать")
