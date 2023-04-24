@@ -3,7 +3,8 @@ import cls from "./Button.module.scss"
 import React, {ButtonHTMLAttributes, FC} from "react";
 
 export enum ThemeButton {
-    CLEAR = "clear"
+    CLEAR = "clear",
+    OUTLINE = "outline"
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -18,7 +19,6 @@ export const Button: FC<ButtonProps> = (props) => {
         children,
         theme,
         ...otherProps
-
     } = props
 
     return (
