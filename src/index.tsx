@@ -1,4 +1,5 @@
 import App from "./app/App";
+import "./styles/index.scss"
 import {BrowserRouter} from "react-router-dom";
 import {createRoot, Root} from 'react-dom/client';
 import {ThemeProvider} from "./app/providers/ThemeProvider";
