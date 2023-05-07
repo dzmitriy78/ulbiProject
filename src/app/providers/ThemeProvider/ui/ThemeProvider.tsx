@@ -16,6 +16,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({children, initialTheme}) =
         setTheme
     }), [theme])
 
+    document.body.className = theme
+
     return (
         <ThemeContext.Provider value={defaultProps}>
             {children}
