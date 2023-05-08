@@ -70,6 +70,14 @@ export const Background: Story = {
         theme: ButtonTheme.BACKGROUND
     }
 }
+export const Disabled: Story = {
+    args: {
+        children: "Text",
+        theme: ButtonTheme.BACKGROUND,
+        disabled: true
+    }
+}
+
 export const SquareDark: Story = {
     args: {
         children: ">",
