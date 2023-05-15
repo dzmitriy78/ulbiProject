@@ -1,65 +1,58 @@
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from "./Sidebar.module.scss"
-import React from "react";
+import React, {useMemo} from "react";
 import {ThemeSwitcher} from "widgets/ThemeSwitcher";
 import {LangSwitcher} from "widgets/LangSwitcher/LangSwitcher";
-import {useTranslation} from "react-i18next";
 import {Button, ButtonSize, ButtonTheme} from "shared/ui/Button/Button";
-import {AppLink, AppLinkTheme} from "shared/ui/AppLink/AppLink";
-import {RoutePath} from "shared/config/routerConfig/routeConfig";
-import MainIcon from "shared/assets/icons/main.svg";
-import AboutIcon from "shared/assets/icons/about.svg";
+import {SidebarItemsList} from "../../model/items";
+import {SidebarItem} from "../SidebarItem/SidebarItem";
 
 interface SidebarProps {
     className?: string
 }
 
-export const Sidebar = ({className}: SidebarProps) => {
+export const Sidebar = React.memo(({className}: SidebarProps) => {
 
-    const {t} = useTranslation()
-    const [collapsed, setCollapsed] = React.useState(false)
+        const [collapsed, setCollapsed] = React.useState(false)
 
-    const onToggle = () => {
-        setCollapsed(prevState => !prevState)
+        const onToggle = () => {
+            setCollapsed(prevState => !prevState)
+        }
+
+        const itemList = useMemo(() => {
+            return SidebarItemsList.map((item) => (
+                <SidebarItem key={item.path}
+                             item={item}
+                             collapsed={collapsed}
+                />
+            ))
+        }, [collapsed])
+
+        return (
+            <div data-testid={"sidebar"}
+                 className={classNames(cls.Sidebar, {[cls.collapsed]: collapsed}, [className])}>
+
+                <Button data-testid={"sidebar-toggle"}
+                        className={cls.collapseBtn}
+                        theme={ButtonTheme.BACKGROUND_INVERTED}
+                        onClick={onToggle}
+                        square
+                        size={ButtonSize.L}>
+                    {
+                        collapsed
+                            ? ">"
+                            : "<"
+                    }
+                </Button>
+                <div className={cls.items}>
+                    {itemList}
+                </div>
+                <div className={cls.switchers}>
+                    <ThemeSwitcher/>
+                    <LangSwitcher short={collapsed}
+                                  className={cls.lang}/>
+                </div>
+            </div>
+        )
     }
-
-    return (
-        <div data-testid={"sidebar"}
-             className={classNames(cls.Sidebar, {[cls.collapsed]: collapsed}, [className])}>
-
-            <Button data-testid={"sidebar-toggle"}
-                    className={cls.collapseBtn}
-                    theme={ButtonTheme.BACKGROUND_INVERTED}
-                    onClick={onToggle}
-                    square
-                    size={ButtonSize.L}>
-                {
-                    collapsed
-                        ? ">"
-                        : "<"
-                }
-            </Button>
-            <div className={cls.items}>
-                <AppLink theme={AppLinkTheme.SECONDARY}
-                         to={RoutePath.main}
-                         className={cls.item}
-                >
-                    <MainIcon className={cls.icon}/>
-                    <span className={cls.link}> {t("Главная")}</span>
-                </AppLink>
-                <AppLink theme={AppLinkTheme.SECONDARY}
-                         to={RoutePath.about}
-                         className={cls.item}
-                >
-                    <AboutIcon className={cls.icon}/>
-                    <span className={cls.link}>{t("О сайте")}</span>
-                </AppLink>
-            </div>
-            <div className={cls.switchers}>
-                <ThemeSwitcher/>
-                <LangSwitcher short={collapsed}
-                              className={cls.lang}/>
-            </div>
-        </div>
-    )
-}
+)

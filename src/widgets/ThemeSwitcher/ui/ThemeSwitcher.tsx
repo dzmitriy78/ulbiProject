@@ -10,17 +10,18 @@ interface ThemeSwitcherProps {
     className?: string
 }
 
-export const ThemeSwitcher = ({className}: ThemeSwitcherProps) => {
+export const ThemeSwitcher = React.memo(({className}: ThemeSwitcherProps) => {
 
-    const {theme, toggleTheme} = useTheme()
+        const {theme, toggleTheme} = useTheme()
 
 
-    return (
-        <Button theme={ButtonTheme.CLEAR}
-                onClick={toggleTheme}
-                className={classNames('',{}, [className])}
-        >
-            {theme === Theme.DARK ? <DarkIcon/> : <LightIcon/>}
-        </Button>
-    )
-}
+        return (
+            <Button theme={ButtonTheme.CLEAR}
+                    onClick={toggleTheme}
+                    className={classNames('', {}, [className])}
+            >
+                {theme === Theme.DARK ? <DarkIcon/> : <LightIcon/>}
+            </Button>
+        )
+    }
+)

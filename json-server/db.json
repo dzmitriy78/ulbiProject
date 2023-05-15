@@ -36,6 +36,13 @@
     }
   ],
   "profile": {
-    "name": "typicode"
+    "first": "Dim",
+    "lastname": "Kar",
+    "age": 45,
+    "currency": "BYN",
+    "country": "Belarus",
+    "city": "Baranavichi",
+    "username": "admin",
+    "avatar": "https://klike.net/uploads/posts/2019-03/1551511868_36.jpg"
   }
 }

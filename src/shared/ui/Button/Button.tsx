@@ -22,34 +22,36 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     square?: boolean
     size?: ButtonSize
     disabled?: boolean
+    children?: React.ReactNode
 }
 
-export const Button: FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = React.memo((props) => {
 
-    const {
-        className,
-        children,
-        theme,
-        square,
-        size = ButtonSize.M,
-        disabled,
-        ...otherProps
-    } = props
+        const {
+            className,
+            children,
+            theme,
+            square,
+            size = ButtonSize.M,
+            disabled,
+            ...otherProps
+        } = props
 
-    const mods: Record<string, boolean> = {
-        [cls[theme]]: true,
-        [cls.square]: square,
-        [cls[size]]: true,
-        [cls.disabled]: disabled
+        const mods: Record<string, boolean> = {
+            [cls[theme]]: true,
+            [cls.square]: square,
+            [cls[size]]: true,
+            [cls.disabled]: disabled
+        }
+
+        return (
+            <button
+                className={classNames(cls.Button, mods, [className])}
+                disabled={disabled}
+                {...otherProps}
+            >
+                {children}
+            </button>
+        )
     }
-
-    return (
-        <button
-            className={classNames(cls.Button, mods, [className])}
-            disabled={disabled}
-            {...otherProps}
-        >
-            {children}
-        </button>
-    )
-}
+)
